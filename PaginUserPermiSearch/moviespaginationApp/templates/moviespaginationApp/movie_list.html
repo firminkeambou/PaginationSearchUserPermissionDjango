@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   {% block body%}
+
+    <h1>List of Items</h1>
+<!-- adding search functionality-->
+
+<form action="" method="GET">
+  <input type="search" name="movie_name">
+  <button type="submit">Search</button>
+</form>
+
+<!-- End of adding search functionality-->
+
+    {%  for item in movie_objects       %} 
+         <h3>{{item.name}}</h3>
+          <h5>{{item.rating}}</h5>
+          
+     {% endfor %}
+
+     
+
+     <!-- Adding navigation bar between many pages-->
+  {%if movie_objects.has_previous %}
+      <a href="?page=1">First</a>
+      <a href="?page={{movie_objects.previous_page_number}}">Previous</a>
+
+  {%endif%}
+
+  <!-- THE following section is added by me, so we can have better pagination
+    list of different pages
+  
+  this will be corrected later by KEAMBOU -->
+
+    page: {{movie_objects.number}} of {{movie_objects.paginator.num_pages}} <br/>
+   {%if movie_objects.has_next%}
+   <a href="?page={{movie_objects.next_page_number}}">Next</a>
+   <a href="?page={{movie_objects.paginator.num_pages}}">Last</a> <!--num_pages gives the total number of pages-->
+  {%endif%}
+  {% endblock %}
+</body>
+</html>
